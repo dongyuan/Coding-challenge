@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="TypographyDashes,InconsistentArrays">
+
+    <!--// disable the strict mode on product version-->
+    <bool name="strictMode">false</bool>
+
+    <!--// WorldRemit API URL -->
+    <string name="worldremit_api_url"> https://wr-interview.herokuapp.com</string>
+
+
+</resources>
