@@ -57,6 +57,9 @@ public class MainPresenterImplTest extends AndroidTestCase {
         recipient = "";
         assertFalse("It's failed to validate the fields!", mMainPresenter.validateFields(MainPresenterImpl.OPERATION_SEND_MONEY, recipient, sendAmount, sendCurrency, receiveAmount, receiveCurrency));
 
+        recipient = "Eric";
+        receiveAmount = "Calculating";
+        assertFalse("It's failed to validate the fields!", mMainPresenter.validateFields(MainPresenterImpl.OPERATION_SEND_MONEY, recipient, sendAmount, sendCurrency, receiveAmount, receiveCurrency));
 
     }
 }

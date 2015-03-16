@@ -232,6 +232,19 @@ public class MainPresenterImpl implements MainPresenter {
                     showToast("Please select the recipient!");
                 }
 
+                try {
+                    float receiveAmountFloatValue = Float.valueOf(receiveAmount);
+                    if (receiveAmountFloatValue <= 0) {
+                        result = false;
+                        // TODO: move the copy to String.xml for localisation.
+                        showToast("Receive amount is not valid!");
+                    }
+                } catch (Exception exception) {
+                    result = false;
+                    // TODO: move the copy to String.xml for localisation.
+                    showToast("Receive amount is not valid!");
+                }
+
                 // send amount, send currency and target currency must be set for this operation.
             case OPERATION_CALCULATE_CURRENCY:
                 if (sCurrencies == null) {
