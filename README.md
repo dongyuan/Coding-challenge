@@ -2,7 +2,7 @@
 # Coding Challenge
 Develop an Android application that mimics some functionality of the 'Money transfer' mobile app.
 
-[![Build Status](https://travis-ci.org/dongyuan/WorldRemit-interview.svg)](https://travis-ci.org/dongyuan/WorldRemit-interview)
+[![Build Status](https://travis-ci.org/dongyuan/Coding-challenge.svg)](https://travis-ci.org/dongyuan/WorldRemit-interview)
 
 ## Table of Contents
 * [Requirements](#0)
