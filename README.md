@@ -1,10 +1,10 @@
 
-#Coding Challenge
+# Coding Challenge
 Develop an Android application that mimics some functionality of the 'Money transfer' mobile app.
 
 [![Build Status](https://travis-ci.org/dongyuan/WorldRemit-interview.svg)](https://travis-ci.org/dongyuan/WorldRemit-interview)
 
-##Table of Contents
+## Table of Contents
 * [Requirements](#0)
 * [1. Design decisions](#1)
 	* [1.1 Requirement](#1.1)
@@ -22,7 +22,7 @@ Develop an Android application that mimics some functionality of the 'Money tran
 
 
 <a name="0"></a>
-##Requirements
+## Requirements
 * The user should be able to select a contact from their contact list to send money to
 * The user should be able to select send and receive currencies from a list of currencies. To get the available currencies to choose from: GET [https://wr-interview.herokuapp.com/api/currencies]( GET [https://wr-interview.herokuapp.com/api/currencies)
 * The user should be able to enter send amount
@@ -32,8 +32,8 @@ Develop an Android application that mimics some functionality of the 'Money tran
 * Write unit tests wherever you see fit
 
 ---------
-##Example requests / responses
-###Get currencies
+## Example requests / responses
+### Get currencies
 ```
 GET https://wr-interview.herokuapp.com/api/currencies
 ```
@@ -44,7 +44,7 @@ Sample response
  ["GBP", "USD", "PHP", "EUR"]
 ```
 -----
-###Calculate
+### Calculate
 ```
 GET https://wr-interview.herokuapp.com/api/calculate?amount=a&sendcurrency=c&receivecurrency=c
 ```
@@ -73,7 +73,7 @@ Sample response:
 }
 ```
 -----
-###Send money
+### Send money
 
 ```
 POST https://wr-interview.herokuapp.com/api/send
@@ -104,9 +104,9 @@ Sample response:
 -----
 
 <a name="1"></a>
-##1. Design decisions
+## 1. Design decisions
 <a name="1.1"></a>
-###1.1 Requirement
+### 1.1 Requirement
 --------
 
 The requirement has been tweaked and the *'calculate'* button is no longer needed. A *'done'* button has been added in the keyboard instead while the user is editing the *send* amount field.
@@ -114,27 +114,27 @@ The requirement has been tweaked and the *'calculate'* button is no longer neede
 The app will calculate the *receive* amount automatically once one of the value in the *send* amount, *send* currency or *receive* currency is changed.
 
 <a name="1.2"></a>
-###1.2 Code Style
+### 1.2 Code Style
 --------
 
 I use the [code style](https://source.android.com/source/code-style.html) Google Android team used to make my code  consistent with the [Android SDK source code](https://source.android.com/source/index.html).
 
 <a name="1.3"></a>
-###1.3 Architecture
+### 1.3 Architecture
 --------
 Model View Presenter(MPV) pattern is used in the app which allows separate the presentation layer from the logic and also let us test them independently. 
 
-####View
+#### View
 A <code>MainView</code> interface has been created and it's implemented by <code>MainActivity</code>. It has the responsibility to create the <code>MainPresenter</code> object. The only thing that the view will do is calling a method from the <code>presenter</code> every time there is an interface action.
 
-####Presenter
+#### Presenter
 The <code>MainPresenter</code>  is responsible to act as *the middle man between view and model*. It retrieves data from the *model* and returns it formatted to the <code>MainView</code>. It's also decides what happens when the end user interacts with the <code>MainView</code>.
 
-####Model:
+#### Model:
 In an application with a good layered architecture, this *model* would only be the gateway to the domain layer or business logic. For now, it is enough to see it as the provider of the data we want to display in the view.
 
 
-#####Rest client
+##### Rest client
 We should never be making network requests directly from an *Activity* or *Fragment*. Even using AsyncTask is asking for trouble. For example, the caller activity could be gone in the stack when the request task finally completes. Holding the caller activity reference is also a common mistake causing memory leak issue.
 
 Therefore, <code>WorldRemitService</code> class has been created, which makes all network requests and handle the responses. [Otto](http://square.github.io/otto/) is used to communicate with the <code>MainPresenter</code> without keeping direct references. [Retroifit](http://square.github.io/retrofit/) is also used to implement the WorldRemit REST client. You can find the implementation from <code>WorldRemitApi</code> class.
@@ -142,7 +142,7 @@ Therefore, <code>WorldRemitService</code> class has been created, which makes al
 
 My approach is not perfect and I will highlight areas for improvement below.
 <a name="1.4"></a>
-###1.4 Testing:
+### 1.4 Testing:
 --------
 In most cases, I would like to use TDD in my project. So I write the Unit tests first based on the requirements.
 There are two Test cases created against <code>MainActivity<code> and </code>MainPresenter</code> respectively. Obviously we should add more to make our code robust in the production code, however it's a interview task and it's sufficient to show my Android testing skill.
@@ -155,7 +155,7 @@ $ adb shell monkey -p worldremit.worldremit.android -v 500
 
 ```
 <a name="1.5"></a>
-###1.5 Some areas need to be improved
+### 1.5 Some areas need to be improved
 --------
 Bear in mind this demo app is not a complete solution. The app always re-query data when the activity is resumed - this is not ideal for battery life or necessary for data 'freshness'. We could address this with proper use of <code> onSaveInstanceSate()</code> or some state-keeping to determine if a request is already in-flight.
 
@@ -180,7 +180,7 @@ Obviously we don't really need to re-query the available currencies all the time
 The app doesn't have much resilience against network errors or loss of connection. The next step for addressing these issues would probably be to introduce a queue/job manager to handle retries and perceiving user input.
 
 <a name="1.6"></a>
-###1.6 Third-party libraries used in this task
+### 1.6 Third-party libraries used in this task
 --------
 
 * [Retroifit](http://square.github.io/retrofit/)
@@ -188,10 +188,10 @@ The app doesn't have much resilience against network errors or loss of connectio
 * [GSon](https://code.google.com/p/google-gson/)
 
 
-##Additional questions and Answers
+## Additional questions and Answers
 
 <a name="2"></a>
-##2. Which architectural patterns did you use in the past for mobile app development if any?
+## 2. Which architectural patterns did you use in the past for mobile app development if any?
 
 
 * [MVC](http://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller)
@@ -200,13 +200,13 @@ The app doesn't have much resilience against network errors or loss of connectio
 
 
 <a name="3"></a>
-##3. What resources would you recommend to someone starting out in Android development?
+## 3. What resources would you recommend to someone starting out in Android development?
 
 The official [Android developer website](http://developer.android.com/index.html) is best starting point. It has everything you need. Google also published a free online course on [udacity](https://www.udacity.com/course/ud853).  Just following the [Training](http://developer.android.com/training/index.html) and the [course](https://www.udacity.com/course/ud853), in the meantime doing more practice, you would be a qualified Android developer quickly.
 
 [Google](http://www.google.com) and [Stackoverflow](http://stackoverflow.com/) are the best resources to find answers if you have any question.
 <a name="4"></a>
-##4. How do you keep up with the latest in Android development?
+## 4. How do you keep up with the latest in Android development?
 
 Personally, I believe practicing is most efficient way to keep your development knowledge up to date.
 I listed some resources/activities below which help me to be a *rockstar*.
@@ -224,7 +224,7 @@ I listed some resources/activities below which help me to be a *rockstar*.
 
 
 <a name="5"></a>
-##5. Describe yourself in JSON format.
+## 5. Describe yourself in JSON format.
 
 
 ```
@@ -270,7 +270,7 @@ I listed some resources/activities below which help me to be a *rockstar*.
 ```
 
 <a name="6"></a>
-##6. List some of your favourite libraries with a brief description.
+## 6. List some of your favourite libraries with a brief description.
 
 In the real world, [The British library](http://www.bl.uk/) and my university's [libary](http://www.bodleian.ox.ac.uk/) are my favourite libraries.
 
@@ -308,7 +308,7 @@ An interesting [article](http://instructure.github.io/blog/2013/12/09/volley-vs-
 
 
 <a name="7"></a>
-##7. What are the top 5 tools that you could not live without?
+## 7. What are the top 5 tools that you could not live without?
 
 New technologies coming every year, you would probably get a complete different list if you ask me the same question  in the next few months
 
